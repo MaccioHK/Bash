@@ -1,0 +1,40 @@
+This is the folder to store the bash script that commonly used, and some concept
+This result is make it re-usable and thus speed up further development.
+
+
+-open the file, the seach for pattern of words, then count it
+
+cat error.log | grep "error" | wc -l
+
+-find for the files, that match the patern, current directory
+find . -name "*.conf" 
+
+-find for the files, that match the patern, root directory
+find / -name "*.conf" 
+
+-find for the file name patterm
+find . -name "*.conf" | grep db
+
+-compare the difference
+diff a.tct b.txt
+example:
+root@f2c69edd5805:/etc/application# diff db.conf db.conf.backup 
+2c2
+< database_port=5433
+---
+> database_port=5432
+root@f2c69edd5805:/etc/application# cat db.conf
+database_host=localhost
+database_port=5433
+database_name=production_db
+max_connections=100
+timeout=30
+retry_attempts=3
+root@f2c69edd5805:/etc/application# cat db.conf.backup 
+database_host=localhost
+database_port=5432
+database_name=production_db
+max_connections=100
+timeout=30
+retry_attempts=3
+root@f2c69edd5805:/etc/application# 
