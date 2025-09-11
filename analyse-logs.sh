@@ -1,5 +1,31 @@
 #!/bin/bash
 
+# stale lock handle
+
+LOCK_FILE="/tmp/log_analysis.lock"
+
+# Check for lock file and validate PID
+if [ -f "$LOCK_FILE" ]; then
+  LOCK_PID=$(cat "$LOCK_FILE")
+  if ps -p "$LOCK_PID" > /dev/null; then
+    echo "Error: Another instance (PID $LOCK_PID) is running. Exiting."
+    exit 1
+  else
+    echo "Stale lock file found (PID $LOCK_PID not running). Removing lock."
+    rm -f "$LOCK_FILE"
+  fi
+fi
+
+# Create lock file
+# assign with current pid
+echo $$ > "$LOCK_FILE"
+trap 'rm -f "$LOCK_FILE"; exit' EXIT INT TERM
+
+# Original script starts here
+LOG_DIR="/usr/app/logs"
+
+# normal code
+
 LOG_DIR="/usr/app/logs"
 ERROR_PATTERNS=("ERROR" "EXCEPTION" "FATAL" "DISCOUNT" "ROLLBACK")
 RECIPIENTS="user1@example.com,user2@example.com,user3@example.com"  # Comma-separated list
