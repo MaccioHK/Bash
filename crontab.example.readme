@@ -1,0 +1,24 @@
+# in this, it is mentioend for the scheduling
+Prerequisites:
+
+Save your script as an executable file, e.g., /Users/kamwingchan/log_analysis.sh (use chmod +x /path/to/log_analysis.sh to make it executable).
+Use absolute paths in the script and crontab (e.g., full path to mutt or email tools, as cron has a limited environment).stackoverflow.com
+Test the script manually first: ./log_analysis.sh.
+
+Using Crontab
+#open the editor:
+crontab -e
+
+The format is: * * * * * /path/to/command (minute, hour, day-of-month, month, day-of-week).
+
+eg runs 00:00 every day/month/weeekday
+0 0 * * * /Users/kamwingchan/log_analysis.sh >> /Users/kamwingchan/cron.log 2>&1
+
+crontab -l
+crontab -r
+tail 0f /users/kamwingchan/cron.log 
+grep CRON /var/log/system/log
+
+
+# Daily IMS log analysis at 2 AM
+0 2 * * * /Users/kamwingchan/log_analysis.sh >> /Users/kamwingchan/ims_log_report.log 2>&1
